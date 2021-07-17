@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  api_node:
+    container_name: api_node
+    build:
+      context: "./api"
+      dockerfile: Dockerfile
+    volumes:
+      - "./api:/app"
+      - "/app/node_modules"
+    ports:
+      - 3333:3333
+
+  frontend:
+    container_name: client
+    build:
+      context: "./web"
+      dockerfile: Dockerfile
+    volumes:
+      - "./web:/app"
+      - "/app/node_modules"
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true    
