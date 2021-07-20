@@ -1,4 +1,4 @@
 import { GlobalState } from './store'
-import { PropertyState } from './slices'
+import { ProfileState } from './slices'
 
-export const selectProperty = (state: GlobalState): PropertyState => state.property;
+export const selectProfile = (state: GlobalState): ProfileState => state.profile;

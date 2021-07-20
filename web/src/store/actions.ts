@@ -1,46 +1,43 @@
 import { AppThunk } from './store';
 
 import {
-  actionRequestPropertyStart,
-  actionCreateNewPropertySuccess,
-  actionCreateNewPropertyFailure,
-  actionFetchPropertyListSuccess,
-  actionFetchPropertyListFailure,
+  actionRequestProfileStart,
+  actionCreateNewProfileSuccess,
+  actionCreateNewProfileFailure,
+  actionFetchProfileListSuccess,
+  actionFetchProfileListFailure,
 } from './slices'
 import { Storage } from '../utils/storage'
-//import { selectProperty } from './selectors'
-import { PropertyProps } from '../types';
+//import { selectProfile } from './selectors'
+import { ProfileProps } from '../types';
 
-export const actionRequestProperty = (propertyData: PropertyProps[]): AppThunk => async (dispatch, getState) => {
+export const actionRequestProfile = (profileData: ProfileProps[]): AppThunk => async (dispatch, getState) => {
   try {
-    dispatch(actionRequestPropertyStart())
+    dispatch(actionRequestProfileStart())
 
-    console.log('>>> ', propertyData)
+    const mappedData = profileData.map(({login, type, avatar_url})=>({login, type, avatar_url}))
 
-    //const { property } = selectProperty(getState())
-    //const propertyList: PropertyProps[] | undefined = property ? { ...propertyData } : undefined;
-
-    await Storage.set('propertyList', JSON.stringify(propertyData))
-    dispatch(actionCreateNewPropertySuccess(propertyData))
+    await Storage.set('profileList', JSON.stringify(mappedData))
+    dispatch(actionCreateNewProfileSuccess(mappedData))
 
   } catch (err) {
     const reason = String(err)
-    dispatch(actionCreateNewPropertyFailure(reason))
+    dispatch(actionCreateNewProfileFailure(reason))
     throw reason
   }
 }
 
-export const actionFetchPropertyList = (): AppThunk => async dispatch => {
+export const actionFetchProfileList = (): AppThunk => async dispatch => {
   try {
-    dispatch(actionRequestPropertyStart())
+    dispatch(actionRequestProfileStart())
 
-    const storedPropertyList = await Storage.get('propertyList');
-    const propertyList: PropertyProps[] | undefined = storedPropertyList ? JSON.parse(storedPropertyList) : undefined;
+    const storedProfileList = await Storage.get('profileList');
+    const profileList: ProfileProps[] | undefined = storedProfileList ? JSON.parse(storedProfileList) : undefined;
 
-    dispatch(actionFetchPropertyListSuccess(propertyList))
+    dispatch(actionFetchProfileListSuccess(profileList))
   } catch (err) {
-    dispatch(actionFetchPropertyListFailure(String(err)))
+    dispatch(actionFetchProfileListFailure(String(err)))
   }
 }
 
-/** @todo: create fetch actions to recover property data from storage and update data */
+/** @todo: create fetch actions to recover profile data from storage and update data */

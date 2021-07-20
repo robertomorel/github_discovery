@@ -1,3 +1,2 @@
-export * from './property';
-export * from './apollo';
+export * from './profile';
 export * from './components';

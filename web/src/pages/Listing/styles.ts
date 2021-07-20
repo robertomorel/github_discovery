@@ -65,7 +65,7 @@ export const Card = styled.div`
     margin-top: 16px;
   }
 
-  a {
+  div {
     text-decoration: none;
     width: 97%;
 
@@ -125,7 +125,7 @@ export const Card = styled.div`
 
     transition: transform 0.2s;
 
-    & + a {
+    & + div {
       margin-top: 16px;
     }
 
@@ -134,27 +134,3 @@ export const Card = styled.div`
     }
   }
 `;
-
-export const PropertiesContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0px;
-
-  > div {
-    transform:scale(1, 1);
-    transition: .5s;
-
-    &:hover {
-      transform:scale(1.1, 1.1);
-      z-index: 1;
-    }
-  }
-
-  div + div {
-    margin-left: 8px;
-  }
-`;
-
-export const List = styled(Favorites)``;

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi';
 
 import { Storage } from '../../utils/storage';
-import imgProfile from '../../assets/logo.jpeg';
+import imgProfile from '../../assets/github-logo.png';
 
 import {
   Header,
@@ -68,7 +68,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ hideMenu }) => {
               <Link>Home</Link>
             </ActiveLink>
             <ActiveLink activeClassName="/listing" to="/listing" onClick={() => history.push('/listing')}>
-              <Link>Posts</Link>
+              <Link>Listing</Link>
             </ActiveLink>
           </nav>
         </Menu>

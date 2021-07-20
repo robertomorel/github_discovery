@@ -11,22 +11,3 @@ export interface SpinnerProps extends TestableComponentProps {
   borderSize?: number // pixels
   duration?: number // seconds
 }
-
-export interface WidgetsProps {
-  propId: string;
-  imageStr: string;
-  price: string;
-  views: string;
-}
-
-export interface CardsProps {
-  propId: string;
-  price: string;
-  header: string;
-  beds: number;
-  baths: number;
-  address: string;
-  zipCode: string;
-  available: boolean;
-  imageStr: string;
-}

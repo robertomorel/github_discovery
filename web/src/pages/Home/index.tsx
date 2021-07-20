@@ -1,97 +1,51 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
-import {
-  FiSearch,
-  FiChevronRight,
-  FiArrowUp,
-  FiArrowDown,
-} from 'react-icons/fi';
+import React from 'react';
+import { FiSearch } from 'react-icons/fi';
 import * as Yup from 'yup';
 import enUS from 'date-fns/locale/en-US';
 import { format } from 'date-fns';
 import { FormHandles } from '@unform/core';
 import 'react-day-picker/lib/style.css';
 import { Form } from '@unform/web';
+import { useHistory } from 'react-router-dom';
 
 import { useToast } from '../../hooks/toast';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import {
-  Container,
-  Search,
-  Content,
-  Section,
-  PropertiesContent,
-} from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
-import { useSelector } from 'react-redux';
-import { selectProperty } from '../../store';
-import { PropertyProps, WidgetsProps } from '../../types';
-import { numberFormat, priceFormatter } from '../../utils/format';
-import { MainHeader, Spinner, SpinnerWrapper, Widget } from '../../components';
+import { actionRequestProfile, useActionDispatch } from '../../store';
+import { MainHeader, Spinner, SpinnerWrapper } from '../../components';
+import { ProfileProps } from '../../types';
+import { getProfiles } from '../../services/profile';
 
+import * as Styles from './styles';
 interface SearchFormData {
   search: string;
 }
 
 export const Home: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [newFeature, setNewFeature] = useState('');
-  const { loading: loadingState, property, error } = useSelector(selectProperty);
-  const [filteredProperties, setFilteredProperties] = useState<PropertyProps[] | undefined>([]);
-  const formRef = useRef<FormHandles>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [newFeature, setNewFeature] = React.useState('');
+  const formRef = React.useRef<FormHandles>(null);
   const { addToast } = useToast();
+  const dispatch = useActionDispatch();
+  const history = useHistory()
 
-  useEffect(() => {
-    if(error) {
-      addToast({
-        type: 'error',
-        title: 'Failed!',
-        description:
-          'There was an unknown error while searching for properties. Try again!',
-      });
-    } else {
-      if (property) {
-        setFilteredProperties([...property])
-      }
-    }
-  }, [loadingState, property]);
-
-  const handlePropertySearch = useCallback(
+  const handlePropertySearch = React.useCallback(
     async (data: SearchFormData) => {
       try {
         setLoading(true);
 
-        if(!property) {
-          addToast({
-            type: 'error',
-            title: 'Search failed!',
-            description:
-              'There was an unknown error while searching for movies. Try again!',
-          });
-          return;
-        }
+        const profiles: ProfileProps[] = await getProfiles(data.search)
+        dispatch(actionRequestProfile(profiles));
 
-        const filterWord = String(data.search).toLocaleLowerCase().trim();
-        const newfilteredProperties = [...property].filter(props =>
-          String(props.overview?.neighborhood).toLocaleLowerCase().trim().includes(filterWord) ||
-          String(props.overview?.city).toLocaleLowerCase().trim().includes(filterWord) ||
-          String(props.overview?.zipcode).toLocaleLowerCase().trim().includes(filterWord)
-        )
+        addToast({
+          type: 'success',
+          title: 'Search successful!',
+          description: 'Enjoy the profiles!',
+        });
 
-        if(newfilteredProperties) {
-          setFilteredProperties([...newfilteredProperties]);
-          addToast({
-            type: 'success',
-            title: 'Search successful!',
-            description: 'Enjoy your future home!',
-          });
-        }
+        history.push('/listing')
+
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -103,65 +57,23 @@ export const Home: React.FC = () => {
         setLoading(false);
       }
     },
-    [addToast, property],
+    [addToast],
   );
 
-  const handleOrder = useCallback(async () => {
-    if (loading) {
-      return;
-    }
-    /** @todo */
-  }, []);
-
-  const lastVisited = useMemo(() => {
-    if(filteredProperties){
-      return [...filteredProperties].sort(
-        (a, b) => {
-          const atrB = b.visits?.lastVisited ? new Date(b.visits.lastVisited) : new Date();
-          const atrA = a.visits?.lastVisited ? new Date(a.visits.lastVisited) : new Date();
-          return Math.abs(atrB.getTime() - atrA.getTime());
-        }
-      ).slice(0, 4).map(prop => {
-        return {
-          propId: prop.id,
-          imageStr: prop.homeImage,
-          price: priceFormatter.format(Number(prop.overview?.price)),
-          views: numberFormat.format(Number(prop.visits?.total))
-        }
-      })
-    }
-  }, [filteredProperties]) as WidgetsProps[] | undefined;
-
-  const mostVisited = useMemo(() => {
-    if(filteredProperties){
-      return [...filteredProperties].sort((a, b) => (
-        (a.visits?.total ? a.visits?.total : 0) <
-        (b.visits?.total ? b.visits?.total : 0)  ? 1 : -1)
-        ).slice(0, 4).map(prop => {
-        return {
-          propId: prop.id,
-          imageStr: prop.homeImage,
-          price: priceFormatter.format(Number(prop.overview?.price)),
-          views: numberFormat.format(Number(prop.visits?.total))
-        }
-      })
-    }
-  }, [filteredProperties]) as WidgetsProps[] | undefined;
-
-  const selectedDateAsText = useMemo(() => {
+  const selectedDateAsText = React.useMemo(() => {
     return format(new Date(), "MMMM dd'th'", {
       locale: enUS,
     });
   }, []);
 
-  const selectedWeekDay = useMemo(() => {
+  const selectedWeekDay = React.useMemo(() => {
     return format(new Date(), 'cccc', {
       locale: enUS,
     });
   }, []);
 
   return (
-    <Container data-testid="home_page">
+    <Styles.Container data-testid="home_page">
       <MainHeader />
 
       {loading ? (
@@ -169,9 +81,9 @@ export const Home: React.FC = () => {
           <Spinner />
         </SpinnerWrapper>
       ) : (
-        <Content>
-          <Search>
-            <h1>Find Your New Home</h1>
+        <Styles.Content>
+          <Styles.Search>
+            <h1>Find Your GitHub Profiles</h1>
             <p>
               <span>{selectedDateAsText}</span>
               <span>{selectedWeekDay}</span>
@@ -183,57 +95,15 @@ export const Home: React.FC = () => {
                 value={newFeature}
                 onChange={e => setNewFeature(e.target.value)}
                 icon={FiSearch}
-                placeholder="Find your home by neighborhood, city, or a ZIP code"
+                placeholder="Find GitHub profiles"
               />
               <Button loading={loading} type="submit">
                 Search
               </Button>
             </Form>
-
-            <button type="button" onClick={handleOrder}>
-              {true ? <FiArrowDown /> : <FiArrowUp />}
-            </button>
-
-            <Section>
-              <strong>Most Visited</strong>
-              {mostVisited?.length === 0 && <p>No properties found.</p>}
-
-              {mostVisited && mostVisited.length !== 0 && (
-                <PropertiesContent>
-                  {mostVisited.map((prop, index) => (
-                    <Widget
-                      key={index}
-                      imageStr={prop.imageStr}
-                      price={prop.price}
-                      propId={prop.propId}
-                      views={prop.views}
-                    />
-                  ))}
-                </PropertiesContent>
-              )}
-            </Section>
-
-            <Section>
-              <strong>Last Visited</strong>
-              {lastVisited?.length === 0 && <p>No properties found.</p>}
-
-              {lastVisited && lastVisited.length !== 0 && (
-                <PropertiesContent>
-                  {lastVisited.map((prop, index) => (
-                    <Widget
-                      key={index}
-                      imageStr={prop.imageStr}
-                      price={prop.price}
-                      propId={prop.propId}
-                      views={prop.views}
-                    />
-                  ))}
-                </PropertiesContent>
-              )}
-            </Section>
-          </Search>
-        </Content>
+          </Styles.Search>
+        </Styles.Content>
       )}
-    </Container>
+    </Styles.Container>
   );
 };

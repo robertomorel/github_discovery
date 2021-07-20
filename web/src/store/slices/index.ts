@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { propertySlice } from './property';
+import { profileSlice } from './profile';
 
-export * from './property';
+export * from './profile';
 
 export const rootReducer = combineReducers({
-  property: propertySlice.reducer,
+  profile: profileSlice.reducer,
 });
