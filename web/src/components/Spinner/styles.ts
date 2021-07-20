@@ -18,8 +18,11 @@ export const StyledSpinner = styled.div<SpinnerProps>`
 `
 
 export const SpinnerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
 `

@@ -17,6 +17,8 @@ export const actionRequestProfile = (profileData: ProfileProps[]): AppThunk => a
 
     const mappedData = profileData.map(({login, type, avatar_url})=>({login, type, avatar_url}))
 
+    console.log('>>> ', mappedData);
+
     await Storage.set('profileList', JSON.stringify(mappedData))
     dispatch(actionCreateNewProfileSuccess(mappedData))
 

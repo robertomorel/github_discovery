@@ -25,8 +25,8 @@ export const Card = styled.div`
       margin-right: 10px;
 
       img {
-        width: 16rem;
-        height: 12.9rem;
+        width: 7.7rem;
+        height: 6rem;
         border-radius: 10px;
       }
 
@@ -34,24 +34,20 @@ export const Card = styled.div`
         margin-left: 24px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        justify-content: space-between;
+        height: 6rem;
 
         strong {
+          margin-top: 0.4rem;
           color: #fff;
           font-size: 25px;
         }
 
-        p::before {
-          content: '';
-          width: 1px;
-          height: 12px;
-          background: #ff9f1c;
-          margin: 0 6px;
-        }
-
-        p {
-          margin-left: 8px;
-          font-size: 15px;
+        span {
+          margin-bottom: 0.4rem;
+          font-size: 17px;
+          color: #ff9f1c;
         }
       }
 
@@ -65,6 +61,8 @@ export const Card = styled.div`
       &:hover {
         svg {
           color: ${shade(0.2, '#ff9f1c')};
+          width: 21px;
+          height: 21px;
         }
       }
     }

@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 import { Storage } from '../../utils/storage';
 import imgProfile from '../../assets/github-logo.png';
 
-import {
-  Header,
-  HeaderContent,
-  Link,
-  Menu,
-  Profile,
-} from './styles';
+import * as Styles from './styles';
 import { ActiveLink } from '../ActiveLink';
-
-const localStoragePrefix = 'app_sweet_home#';
+import { useToast } from '../../hooks/toast';
+import { selectProfile } from '../../store';
+import { localStoragePrefix } from '../../types';
 
 interface MainHeaderProps {
   hideMenu?: boolean;
@@ -23,7 +19,9 @@ interface MainHeaderProps {
 
 export const MainHeader: React.FC<MainHeaderProps> = ({ hideMenu }) => {
   const [user, setUser] = useState('');
-  const history = useHistory()
+  const history = useHistory();
+  const { addToast } = useToast();
+  const { loading, profile, error } = useSelector(selectProfile);
 
   useEffect(() => {
     const getUserFromStorage = async () => {
@@ -44,36 +42,38 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ hideMenu }) => {
   }, []);
 
   return (
-    <Header data-testid='main-header-component'>
-      <HeaderContent>
-        <Profile hideMenu={hideMenu}>
+    <Styles.Header data-testid='main-header-component'>
+      <Styles.HeaderContent>
+        <Styles.Profile hideMenu={hideMenu}>
           <img src={imgProfile} alt="Profile" />
 
           <div>
             <span>Welcome,</span>
             <strong data-testid="user_ip">{user}</strong>
           </div>
-        </Profile>
+        </Styles.Profile>
 
         {hideMenu && (
           <button type="button" onClick={() => history.goBack()} name='goback'>
             <FiArrowLeft />
           </button>
         )}
-      </HeaderContent>
+      </Styles.HeaderContent>
       {!hideMenu && (
-        <Menu>
+        <Styles.Menu>
           <nav>
             <ActiveLink activeClassName="/" to="/" onClick={() => history.push('/')}>
-              <Link>Home</Link>
+              <Styles.Link>Home</Styles.Link>
             </ActiveLink>
-            <ActiveLink activeClassName="/listing" to="/listing" onClick={() => history.push('/listing')}>
-              <Link>Listing</Link>
-            </ActiveLink>
+            {!error && !loading && profile && (
+              <ActiveLink activeClassName="/listing" to="/listing" onClick={() => history.push('/listing')}>
+                <Styles.Link>Listing</Styles.Link>
+              </ActiveLink>
+            )}
           </nav>
-        </Menu>
+        </Styles.Menu>
       )}
-    </Header>
+    </Styles.Header>
   );
 }
 

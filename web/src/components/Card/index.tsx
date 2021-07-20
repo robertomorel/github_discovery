@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiCheck } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { ProfileProps } from '../../types';
 
 import { Card as CompCard } from './styles';
@@ -17,18 +18,20 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <CompCard data-testid='card-component'>
-      <div
+      <Link
         key={key}
+        to={{ pathname: `https://github.com/${login}` }}
+        target="_blank"
         data-testid='card-component-link'>
         <div>
           <img src={avatar_url} alt="Avatar" />
-            <div>
-              <strong>{type}</strong>
-              <span>{`Name: ${login}`}</span>
-            </div>
+          <div>
+            <strong>{type}</strong>
+            <span>{`User name:  ${login}`}</span>
+          </div>
           <FiCheck size={20} name='moveFoward' />
         </div>
-      </div>
+      </Link>
     </CompCard>
   );
 }

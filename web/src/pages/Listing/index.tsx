@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-day-picker/lib/style.css';
-
 import { useSelector } from 'react-redux';
+
 import { selectProfile } from '../../store';
 import { MainHeader, Spinner, SpinnerWrapper, Card } from '../../components';
 
