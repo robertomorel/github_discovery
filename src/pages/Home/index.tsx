@@ -51,7 +51,7 @@ export const Home: React.FC = () => {
         const storagedSearch = await Storage.get(localStoragePrefix+'user');
 
         // Negative logic in this rare case is easier to understand
-        if(!(storagedSearch && storagedSearch == data.search && profile)){
+        if(!(storagedSearch && storagedSearch === data.search && profile)){
           const profiles: ProfileProps[] = await getProfiles(data.search)
           dispatch(actionRequestProfile(profiles));
         }
@@ -91,7 +91,7 @@ export const Home: React.FC = () => {
         setLoading(false);
       }
     },
-    [addToast],
+    [addToast, profile, dispatch, history],
   );
 
   const selectedDateAsText = React.useMemo(() => {

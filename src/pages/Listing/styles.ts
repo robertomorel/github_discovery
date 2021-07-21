@@ -38,6 +38,12 @@ export const Favorites = styled.div`
     margin-top: 20px;
     margin-bottom: 40px;
   }
+
+  @media (max-width: 425px) {
+    h1 {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const Section = styled.section`

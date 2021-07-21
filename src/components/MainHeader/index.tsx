@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi';
@@ -9,7 +9,6 @@ import imgProfile from '../../assets/github-logo.png';
 
 import * as Styles from './styles';
 import { ActiveLink } from '../ActiveLink';
-import { useToast } from '../../hooks/toast';
 import { selectProfile } from '../../store';
 import { localStoragePrefix } from '../../types';
 
@@ -18,12 +17,11 @@ interface MainHeaderProps {
 }
 
 export const MainHeader: React.FC<MainHeaderProps> = ({ hideMenu }) => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = React.useState('');
   const history = useHistory();
-  const { addToast } = useToast();
   const { loading, profile, error } = useSelector(selectProfile);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const getUserFromStorage = async () => {
       const storagedUser = await Storage.get(localStoragePrefix+'user');
       if (storagedUser) setUser(storagedUser);
@@ -39,7 +37,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ hideMenu }) => {
           await Storage.set(localStoragePrefix+'user', response.data);
         });
       }
-  }, []);
+  }, [user]);
 
   return (
     <Styles.Header data-testid='main-header-component'>

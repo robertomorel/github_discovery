@@ -55,6 +55,23 @@ export const Search = styled.div`
       width: 180px;
       margin-left: 16px;
     }
+
+    @media (max-width: 425px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      > button {
+        width: 130px;
+        margin-top: 10px;
+        margin-left: 0;
+        height: 44px;
+      }
+
+      > div {
+        height: 44px;
+      }
+    }
   }
 
   > button {

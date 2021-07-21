@@ -3,12 +3,11 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import Routes from './routes';
-import { selectProfile, useActionDispatch } from './store';
+import { selectProfile } from './store';
 import { Spinner, SpinnerWrapper } from './components';
 
 const App: React.FC = () => {
   const { loading } = useSelector(selectProfile);
-  const dispatch = useActionDispatch();
 
   return (
     <>

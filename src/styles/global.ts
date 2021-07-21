@@ -48,6 +48,12 @@ export default createGlobalStyle`
     }
   }
 
+  @media (max-width: 425px) {
+    html {
+      font-size: 68.2%
+    }
+  }
+
   body {
     background: var(--gray-900);
     color: var(--white);

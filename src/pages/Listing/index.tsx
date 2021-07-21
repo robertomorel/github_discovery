@@ -53,7 +53,7 @@ export const Listing: React.FC = () => {
     setProfileList([...sortedProfiles]);
     setIsIncreasing(!isIncreasing);
 
-  }, [loadingState, isIncreasing]);
+  }, [loadingState, isIncreasing, profile]);
 
   return (
     <Styles.Container data-testid="listing_page">
