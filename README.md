@@ -26,6 +26,7 @@ This is an Web App built in ReactJS to simulate an application to list github ac
 - The app then parses the response from the server. If data is returned, the **Results** component should display the fetched values. If there is an issue with the request, then an error message should be displayed.
 - The app has to compile and run without issue. It should be stable and reasonably fool-proof, handling all obvious test cases.
 - The app should contain basic tests, with  >50% code coverage.
+- Mobile responsive.
 
 ## Technologies
 - [ReactJS]()
