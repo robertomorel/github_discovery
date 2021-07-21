@@ -1,48 +1,53 @@
 import React from 'react';
-import { wait, screen, fireEvent, within } from '@testing-library/react';
+import { wait, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
+import { act } from 'react-test-renderer';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import { Card } from '../../components';
-import { renderPage, renderWithAllProviders, createHistoryForRoute } from '../../utils/tests';
+import { renderWithAllProviders, createHistoryForRoute } from '../../utils/tests';
+
+const avatarUrl = 'https://avatars.githubusercontent.com/u/49918342?s=400&u=8d5765a21f6b67e45735501315b98f5da3fff7d2&v=4';
+const API_REQUEST_DELAY = 200 //ms
 
 describe('Widget component', () => {
+  beforeEach(async () => {
+    jest.useFakeTimers()
+  })
+
   it('should be able to render a new widget', async () => {
-    renderWithAllProviders({ ui: <Card
-      propId='1'
-      imageStr='property-detail-1.jpg'
-      header='Miami - Kendall'
-      price='$100,000.00'
-      beds={5}
-      baths={4.5}
-      address='1234 SW 11th ave'
-      zipCode='12345'
-      available={true}
-    /> })
+    const { container } = renderWithAllProviders({
+      ui:
+      <Router history={createHistoryForRoute('/')}>
+        <Card
+          key={1}
+          login='robertomorel'
+          type='User'
+          avatar_url={avatarUrl}
+        />
+      </Router>
+    })
 
     expect(screen.getByTestId('card-component')).toBeTruthy();
     await wait(() =>
-      expect(screen.getByRole('img', { name: 'Casa'})).toBeInTheDocument(),
+      expect(screen.getByRole('link', { name: 'Avatar User User name: robertomorel'})).toBeInTheDocument(),
     )
   });
 
   it('should be able to focus on it', async () => {
-    //createHistoryForRoute('/listing');
-
-    renderWithAllProviders({ ui: <Card
-      propId='1'
-      imageStr='property-detail-1.jpg'
-      header='Miami - Kendall'
-      price='$100,000.00'
-      beds={5}
-      baths={4.5}
-      address='1234 SW 11th ave'
-      zipCode='12345'
-      available={true}
-    /> })
-
-    createHistoryForRoute('/listing');
+    renderWithAllProviders({
+      ui:
+      <Router history={createHistoryForRoute('/')}>
+        <Card
+          key={1}
+          login='robertomorel'
+          type='User'
+          avatar_url={avatarUrl}
+        />
+      </Router>
+    })
 
     expect(screen.getByTestId('card-component')).toBeTruthy();
 
@@ -54,5 +59,34 @@ describe('Widget component', () => {
     fireEvent.mouseOver(button);
 
     expect(button).toHaveStyle({ cursor: 'pointer' })
+  });
+
+  it('should be able to navigate to GitHub page', async () => {
+    renderWithAllProviders({
+      ui:
+      <Router history={createHistoryForRoute('/')}>
+        <Card
+          key={1}
+          login='robertomorel'
+          type='User'
+          avatar_url={avatarUrl}
+        />
+      </Router>
+    })
+
+    expect(screen.getByTestId('card-component')).toBeTruthy();
+
+    const button = screen.getByTestId('card-component-link')
+    await wait(() =>
+      expect(button).toBeInTheDocument(),
+    );
+
+    fireEvent.click(button);
+
+    act(() => jest.advanceTimersByTime(API_REQUEST_DELAY))
+
+    await wait(() =>
+      expect(screen.getByText('User')).toBeInTheDocument(),
+    );
   });
 });
