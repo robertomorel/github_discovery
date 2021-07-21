@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
+import ReactPaginate from 'react-paginate';
 
 export const Container = styled.div``;
 
@@ -53,6 +54,25 @@ export const Section = styled.section`
 
   > p {
     margin-left: 10px;
+  }
+
+  > button {
+    position: absolute;
+    margin-top: -40px;
+    right: 5px;
+    background: transparent;
+    border: 0;
+    color: var(--gray-830);
+
+    svg {
+      width: 20px;
+      height: 20px;
+      transition: 0.2s;
+    }
+
+    &:hover {
+      color: ${shade(0.2, '#ff9f1c')};
+    }
   }
 `;
 
@@ -134,3 +154,5 @@ export const Card = styled.div`
     }
   }
 `;
+
+export const Paginate = styled(ReactPaginate)``

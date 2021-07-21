@@ -25,7 +25,7 @@ export const Card = styled.div`
       margin-right: 10px;
 
       img {
-        width: 7.7rem;
+        width: 6rem;
         height: 6rem;
         border-radius: 10px;
       }
