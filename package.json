@@ -1,0 +1,112 @@
+{
+  "name": "sweet-home-web-app",
+  "author": {
+    "name": "Roberto Morel"
+  },
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
+    "@reduxjs/toolkit": "^1.5.0",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/date-fns": "^2.6.0",
+    "@types/ip": "^1.1.0",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-day-picker": "^5.3.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-icons": "^3.0.0",
+    "@types/react-paginate": "^7.1.1",
+    "@types/react-redux": "^7.1.11",
+    "@types/yup": "^0.28.0",
+    "@unform/core": "^2.1.0",
+    "@unform/web": "^2.1.0",
+    "apollo-boost": "^0.4.7",
+    "apollo-client": "^2.6.8",
+    "axios": "^0.19.2",
+    "axios-mock-adapter": "^1.18.1",
+    "date-fns": "^2.14.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
+    "ip": "^1.1.5",
+    "local-ip-url": "^1.0.3",
+    "netlify-cli": "^5.0.0",
+    "polished": "^3.5.2",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.5.2",
+    "react-day-picker": "^7.4.8",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
+    "react-native-network-info": "^5.2.1",
+    "react-native-public-ip": "^1.0.2",
+    "react-paginate": "^7.1.3",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-spring": "^8.0.27",
+    "styled-components": "^5.1.0",
+    "typescript": "~3.7.2",
+    "uuidv4": "^6.0.7",
+    "yup": "^0.28.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/*.tsx",
+      "!src/hooks/index.tsx"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.3.16",
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@testing-library/react-hooks": "^3.3.0",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/redux-mock-store": "^1.0.2",
+    "@types/styled-components": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^6.0.0",
+    "jest-localstorage-mock": "^2.4.2",
+    "prettier": "^2.1.2",
+    "react-test-renderer": "^16.13.1",
+    "redux-mock-store": "^1.5.4",
+    "ts-jest": "^26.4.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
+}
