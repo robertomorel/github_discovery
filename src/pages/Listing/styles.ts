@@ -51,7 +51,7 @@ export const Section = styled.section`
 
   > strong {
     color: #999591;
-    font-size: 20px;
+    font-size: 1.5rem;
     line-height: 26px;
     border-bottom: 1px solid #3e3b47;
     display: block;
@@ -71,8 +71,8 @@ export const Section = styled.section`
     color: var(--gray-830);
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 1.5rem;
+      height: 1.5rem;
       transition: 0.2s;
     }
 
@@ -118,7 +118,6 @@ export const Card = styled.div`
 
         strong {
           color: #fff;
-          font-size: 25px;
         }
 
         p::before {
@@ -131,7 +130,6 @@ export const Card = styled.div`
 
         p {
           margin-left: 8px;
-          font-size: 15px;
         }
       }
 

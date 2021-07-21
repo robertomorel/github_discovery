@@ -41,12 +41,12 @@ export const Card = styled.div`
         strong {
           margin-top: 0.4rem;
           color: #fff;
-          font-size: 25px;
+          font-size: 1.4rem;
         }
 
         span {
           margin-bottom: 0.4rem;
-          font-size: 17px;
+          font-size: 1rem;
           color: #ff9f1c;
         }
       }
