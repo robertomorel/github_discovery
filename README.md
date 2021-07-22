@@ -20,13 +20,15 @@
 This is an Web App built in ReactJS to simulate an application to list github accounts by user name.
 
 ### Features
-- After the app is launched, the **Search** component is displayed
-- The user enters a random String value into to the 'Login' field and clicks the 'Submit' button
-- The app sends a http request to `https://api.github.com/search/users?q={login} in:login`, where {login} is the String value entered by the user
-- The app then parses the response from the server. If data is returned, the **Results** component should display the fetched values. If there is an issue with the request, then an error message should be displayed.
-- The app has to compile and run without issue. It should be stable and reasonably fool-proof, handling all obvious test cases.
-- The app should contain basic tests, with  >50% code coverage.
-- Mobile responsive.
+- After the app is launched, the **Search** component is displayed;
+- The user enters a random String value into to the 'Login' field and clicks the 'Submit' button;
+- The app sends a http request to `https://api.github.com/search/users?q={login} in:login`, where {login} is the String value entered by the user;
+- The app then parses the response from the server. If data is returned, the **Results** component should display the fetched values. If there is an issue with the request, then an error message should be displayed;
+- The app has to compile and run without issue. It should be stable and reasonably fool-proof, handling all obvious test cases;
+- The app should contain basic tests, with  >50% code coverage;
+- Mobile layout responsive;
+- Can search with no string in the field (at least 3 char.);
+- CI/CD with Github and Netlify.
 
 ## Technologies
 - [ReactJS]()
